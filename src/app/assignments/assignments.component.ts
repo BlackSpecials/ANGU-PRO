@@ -10,6 +10,7 @@ import { AssignmentDetailComponent } from "./assignment-detail/assignment-detail
 import { MatDividerModule } from '@angular/material/divider';
 
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
+import { AssignmentsService } from '../shared/assignments.service';
 
 @Component({
     selector: 'app-assignments',
@@ -28,26 +29,14 @@ export class AssignmentsComponent implements OnInit {
   // Pour le click sur un assignment
   assignmentSelectionne!:Assignment;
 
-  assignments:Assignment[] = [
-    {
-      nom:"Devoir Angular de Mr Buffa",
-      dateDeRendu: new Date("2024-02-17"),
-      rendu: false
-    },
-    {
-      nom:"Devoir J2EE de Mr Grin",
-      dateDeRendu: new Date("2024-12-15"),
-      rendu: true
-    },
-    {
-      nom:"Devoir J2EE de Mr Winter, gestion de projet",
-      dateDeRendu: new Date("2024-11-10"),
-      rendu: true
-    }
-  ];
+  constructor(private assignmentService:AssignmentsService){}
+
+  assignments:Assignment[] = [];
 
   ngOnInit(): void {
     console.log("COMPOSANT AFFICHE !");
+
+    this.assignments = this.assignmentService.getAssignments();
     // on active le bouton d'ajout au bout de 3 secondes
     setTimeout(() => {
       this.ajoutActive = true;
@@ -73,5 +62,16 @@ export class AssignmentsComponent implements OnInit {
 
     this.assignments.push(event);
     this.formVisible = false;
+  }
+
+  onAssignmentSupprime(event:Assignment) {
+    console.log("Reçu du fils: Assignment à supprimer : " + event.nom);
+    // Il faut trouver position de cet assignment dans le tableau
+    const pos = this.assignments.indexOf(event, 0);
+    // On utilise la méthode standard JavaScript splice pour supprimer
+    // un élément du tableau à partir de son index et on supprime un seul
+    // élément du tableau (premier paramètre = la position,
+    // second = le nombre d'éléments à supprimer)
+    this.assignments.splice(pos, 1);
   }
 }
