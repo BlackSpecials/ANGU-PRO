@@ -8,26 +8,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from "./assignment-detail/assignment-detail.component";
 import { MatDividerModule } from '@angular/material/divider';
-import { RouterModule } from '@angular/router';
+
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import { AssignmentsService } from '../shared/assignments.service';
-
+import { RouterLink } from '@angular/router';
 @Component({
     selector: 'app-assignments',
     standalone: true,
     templateUrl: './assignments.component.html',
     styleUrl: './assignments.component.css',
-    imports: [RouterModule,CommonModule, RenduDirective, NonRenduDirective,
+    imports: [CommonModule, RenduDirective, NonRenduDirective,
              AssignmentDetailComponent, MatListModule, MatDividerModule,
-             AddAssignmentComponent, MatButtonModule]
+             AddAssignmentComponent, MatButtonModule,
+            RouterLink]
 })
 export class AssignmentsComponent implements OnInit {
-  ajoutActive = false;
-  // Pour afficher ou pas le formulaire
-  //formVisible = false;
-
-  // Pour le click sur un assignment
-  assignmentSelectionne!:Assignment;
   // tableau des assignments qu'on va remplir via le service
   assignments:Assignment[] = [];
 
@@ -48,27 +43,6 @@ export class AssignmentsComponent implements OnInit {
     else return "red"
   }
 
-  assignmentClique(a:Assignment) {
-    console.log("Assignment cliqué : " + a.nom);
-    this.assignmentSelectionne = a;
-  }
-
-  /*onAddAssignmentBtnClick() {
-    this.formVisible = true;
-  }
-
-  onAddAssignmentClique(event:Assignment) {
-    console.log("Nouvel assignment reçu du fils!");
-
-    //this.assignments.push(event);
-    this.assignmentService.addAssignment(event)
-    .subscribe(message => {
-      console.log(message);
-      this.formVisible = false;
-    });
-
-  }*/
-
   onAssignmentSupprime(event:Assignment) {
     console.log("Reçu du fils: Assignment à supprimer : " + event.nom);
     // Il faut trouver position de cet assignment dans le tableau
@@ -77,6 +51,8 @@ export class AssignmentsComponent implements OnInit {
     // un élément du tableau à partir de son index et on supprime un seul
     // élément du tableau (premier paramètre = la position,
     // second = le nombre d'éléments à supprimer)
-    this.assignments.splice(pos, 1);
+    //this.assignments.splice(pos, 1);
+
+    this.assignmentService.deleteAssignment(event);
   }
 }
