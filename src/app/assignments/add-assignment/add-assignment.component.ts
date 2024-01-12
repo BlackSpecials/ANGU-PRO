@@ -41,13 +41,13 @@ export class AddAssignmentComponent {
     nouvelAssignment.dateDeRendu = new Date(this.dateDeRendu);
     nouvelAssignment.rendu = false;
 
-    // et on le rajoute au tableau des assignments
-    //this.assignments.push(nouvelAssignment);
+      // et on le rajoute au tableau des assignments
+      //this.assignments.push(nouvelAssignment);
 
-    // On envoie le nouvel assignment sous la forme d'un
-    // événement "nouvelAssignment" à notre component parent
-    this.nouvelAssignmentAjoute.emit(nouvelAssignment);
-
-    //this.assignmentService.addAssignment(nouvelAssignment);
+      // On envoie le nouvel assignment sous la forme d'un
+      // événement "nouvelAssignment" à notre component parent
+      // this.nouvelAssignmentAjoute.emit(nouvelAssignment);
+      this.assignmentService.addAssignment(nouvelAssignment).subscribe(msg=>console.log(msg))
+      //this.assignmentService.addAssignment(nouvelAssignment);
   }
 }

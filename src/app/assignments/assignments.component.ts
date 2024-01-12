@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Assignment } from './assignment.model';
 import { AssignmentDetailComponent } from "./assignment-detail/assignment-detail.component";
 import { MatDividerModule } from '@angular/material/divider';
-
+import { RouterModule } from '@angular/router';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import { AssignmentsService } from '../shared/assignments.service';
 
@@ -17,14 +17,14 @@ import { AssignmentsService } from '../shared/assignments.service';
     standalone: true,
     templateUrl: './assignments.component.html',
     styleUrl: './assignments.component.css',
-    imports: [CommonModule, RenduDirective, NonRenduDirective,
+    imports: [RouterModule,CommonModule, RenduDirective, NonRenduDirective,
              AssignmentDetailComponent, MatListModule, MatDividerModule,
              AddAssignmentComponent, MatButtonModule]
 })
 export class AssignmentsComponent implements OnInit {
   ajoutActive = false;
   // Pour afficher ou pas le formulaire
-  formVisible = false;
+  //formVisible = false;
 
   // Pour le click sur un assignment
   assignmentSelectionne!:Assignment;
@@ -53,7 +53,7 @@ export class AssignmentsComponent implements OnInit {
     this.assignmentSelectionne = a;
   }
 
-  onAddAssignmentBtnClick() {
+  /*onAddAssignmentBtnClick() {
     this.formVisible = true;
   }
 
@@ -67,7 +67,7 @@ export class AssignmentsComponent implements OnInit {
       this.formVisible = false;
     });
 
-  }
+  }*/
 
   onAssignmentSupprime(event:Assignment) {
     console.log("Reçu du fils: Assignment à supprimer : " + event.nom);
